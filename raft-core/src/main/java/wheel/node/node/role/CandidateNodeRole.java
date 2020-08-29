@@ -1,4 +1,4 @@
-package wheel.node.role;
+package wheel.node.node.role;
 
 /**
  * @describe: candidate节点角色

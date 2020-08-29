@@ -1,4 +1,4 @@
-package wheel.node.role;
+package wheel.node.node.role;
 
 /**
  * @describe: leader节点角色功能

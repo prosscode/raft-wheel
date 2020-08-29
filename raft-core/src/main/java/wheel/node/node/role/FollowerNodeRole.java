@@ -1,4 +1,4 @@
-package wheel.node.role;
+package wheel.node.node.role;
 
 /**
  * @describe: follower节点角色

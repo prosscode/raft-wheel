@@ -1,4 +1,4 @@
-package wheel.node.role;
+package wheel.node.node.role;
 
 /**
  * @describe: 角色和状态数据公共类
