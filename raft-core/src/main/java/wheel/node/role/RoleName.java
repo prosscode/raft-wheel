@@ -1,4 +1,4 @@
-package wheel.node;
+package wheel.node.role;
 
 /**
  * @describe:

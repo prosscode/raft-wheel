@@ -1,7 +1,5 @@
 package wheel.node.role;
 
-import wheel.node.RoleName;
-
 /**
  * @describe: 角色和状态数据公共类
  *      抽取公共的字段作为父类数据，方便为每一个角色建模。

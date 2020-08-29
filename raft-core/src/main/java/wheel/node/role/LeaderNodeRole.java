@@ -1,12 +1,11 @@
 package wheel.node.role;
 
-import wheel.node.RoleName;
-
 /**
  * @describe: leader节点角色功能
- *  1。 需要定时给follower节点发送心跳（日志复制的定时器）
+ *  1。 需要定时给follower节点发送心跳
  *  2。 需要把控日志复制进度（不在节点角色中，和集群成员表在一起实现）
  *
+ *  leader角色被创建后，除非切换成其它角色，否则不会有修改
  * @author: 彭爽 pross.peng
  * @date: 2020/08/23
  */

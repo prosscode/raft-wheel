@@ -1,7 +1,5 @@
 package wheel.node.role;
 
-import wheel.node.RoleName;
-
 /**
  * @describe: candidate节点角色
  *      1。 被投票，决定变成follower或者leader
