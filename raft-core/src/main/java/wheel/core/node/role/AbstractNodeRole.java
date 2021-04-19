@@ -1,9 +1,9 @@
-package wheel.node.node.role;
+package wheel.core.node.role;
 
 /**
  * @describe: 角色和状态数据公共类
  *      抽取公共的字段作为父类数据，方便为每一个角色建模。
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng 彭爽 pross.peng
  * @date: 2020/08/23
  */
 public abstract class AbstractNodeRole {

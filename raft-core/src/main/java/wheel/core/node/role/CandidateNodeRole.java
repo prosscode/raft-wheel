@@ -1,9 +1,11 @@
-package wheel.node.node.role;
+package wheel.core.node.role;
+
+import wheel.core.schedule.ElectionTimeout;
 
 /**
  * @describe: candidate节点角色
  *      1。 被投票，决定变成follower或者leader
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/08/23
  */
 public class CandidateNodeRole extends AbstractNodeRole{

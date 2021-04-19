@@ -1,11 +1,11 @@
-package wheel.node.schedule;
+package wheel.core.schedule;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @describe:
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/08/29
  */
 public class LogReplicationTask {

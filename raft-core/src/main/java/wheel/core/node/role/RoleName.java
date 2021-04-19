@@ -1,8 +1,8 @@
-package wheel.node.node.role;
+package wheel.core.node.role;
 
 /**
- * @describe:
- * @author: 彭爽 pross.peng
+ * @Created by shuang.peng
+ * @Description
  * @date: 2020/08/23
  */
 public enum RoleName {

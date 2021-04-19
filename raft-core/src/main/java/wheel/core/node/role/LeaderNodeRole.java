@@ -1,4 +1,6 @@
-package wheel.node.node.role;
+package wheel.core.node.role;
+
+import wheel.core.schedule.LogReplicationTask;
 
 /**
  * @describe: leader节点角色功能
@@ -6,7 +8,7 @@ package wheel.node.node.role;
  *  2。 需要把控日志复制进度（不在节点角色中，和集群成员表在一起实现）
  *
  *  leader角色被创建后，除非切换成其它角色，否则不会有修改
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/08/23
  */
 public class LeaderNodeRole extends AbstractNodeRole {

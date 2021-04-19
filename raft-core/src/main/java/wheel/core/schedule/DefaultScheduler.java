@@ -1,4 +1,4 @@
-package wheel.node.schedule;
+package wheel.core.schedule;
 
 
 import java.util.Random;
@@ -10,7 +10,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
 /**
  * @describe: 默认定时器实现
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/08/23
  */
 public class DefaultScheduler implements Scheduler {

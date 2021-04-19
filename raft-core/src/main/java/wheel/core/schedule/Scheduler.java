@@ -1,4 +1,4 @@
-package wheel.node.schedule;
+package wheel.core.schedule;
 
 /**
  * @describe: 定时器组件
@@ -8,7 +8,7 @@ package wheel.node.schedule;
  *      2。取消选举超时
  *      3。重置选举超时，在follower角色收到leader角色的心跳消息时进行
  *
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/08/23
  */
 public interface Scheduler {

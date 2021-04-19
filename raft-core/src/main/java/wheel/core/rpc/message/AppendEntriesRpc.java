@@ -1,6 +1,6 @@
-package wheel.node.rpc.message;
+package wheel.core.rpc.message;
 
-import wheel.node.rpc.NodeId;
+import wheel.core.rpc.NodeId;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * @describe:
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/09/12
  */
 public class AppendEntriesRpc {

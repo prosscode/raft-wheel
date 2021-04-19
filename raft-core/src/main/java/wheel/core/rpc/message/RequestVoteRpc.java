@@ -1,12 +1,12 @@
-package wheel.node.rpc.message;
+package wheel.core.rpc.message;
 
-import wheel.node.rpc.NodeId;
+import wheel.core.rpc.NodeId;
 
 /**
  * @describe: raft核心算法中主要有两种消息
  *  1。request vote 投票请求
  *  2。append entries 日志复制请求
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/09/12
  */
 public class RequestVoteRpc {

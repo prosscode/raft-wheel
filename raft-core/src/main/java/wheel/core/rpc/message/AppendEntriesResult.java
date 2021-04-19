@@ -1,8 +1,8 @@
-package wheel.node.rpc.message;
+package wheel.core.rpc.message;
 
 /**
  * @describe:
- * @author: 彭爽 pross.peng
+ * @created by shuang.peng
  * @date: 2020/09/12
  */
 public class AppendEntriesResult {
