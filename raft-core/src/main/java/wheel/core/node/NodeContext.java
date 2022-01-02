@@ -1,6 +1,7 @@
 package wheel.core.node;
 
 import com.google.common.eventbus.EventBus;
+import wheel.core.node.store.NodeStore;
 import wheel.core.rpc.Connector;
 import wheel.core.schedule.Scheduler;
 import wheel.core.support.TaskExecutor;
