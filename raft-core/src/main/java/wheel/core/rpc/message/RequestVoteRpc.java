@@ -1,6 +1,6 @@
 package wheel.core.rpc.message;
 
-import wheel.core.rpc.NodeId;
+import wheel.core.node.NodeId;
 
 /**
  * @describe: raft核心算法中主要有两种消息

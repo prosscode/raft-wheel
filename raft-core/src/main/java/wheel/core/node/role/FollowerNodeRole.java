@@ -1,12 +1,10 @@
 package wheel.core.node.role;
 
-import wheel.core.rpc.NodeId;
+import wheel.core.node.NodeId;
 import wheel.core.schedule.ElectionTimeout;
 
 /**
  * @describe: follower节点角色
- *   角色字段的不可变（final）：follower选举超时或者接受到来自leader节点服务器的心跳时，必须新建一个角色实例
- *                          保证并发环境下的数据安全，以及进一步简化设计
  *    1。需要去投票
  *    2。需要知道leader节点
  * @created by shuang.peng

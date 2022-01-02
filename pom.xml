@@ -48,6 +48,7 @@
                 </exclusions>
             </dependency>
 
+            <!--protobuf 序列化/反序列化-->
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
@@ -72,6 +73,7 @@
                 <version>1.4</version>
             </dependency>
 
+            <!--命令行jar-->
             <dependency>
                 <groupId>org.jline</groupId>
                 <artifactId>jline</artifactId>
@@ -114,12 +116,12 @@
                     <version>3.0.2</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
-                </plugin>
-                <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.6</version>
                 </plugin>
             </plugins>
         </pluginManagement>

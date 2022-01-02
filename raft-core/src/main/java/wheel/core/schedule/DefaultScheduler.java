@@ -43,18 +43,19 @@ public class DefaultScheduler implements Scheduler {
         this.logReplicationDelay = logReplicationDelay;
         this.logReplicationInterval = logReplicationInterval;
         electionTimeoutRandom = new Random();
-        scheduledExecutorService = newSingleThreadScheduledExecutor(r->new Thread(r,"scheduler"));
+        scheduledExecutorService = newSingleThreadScheduledExecutor(thread -> new Thread(thread, "scheduler"));
     }
 
 
-    // 日志复制定时器
+    // 日志复制
     @Override
     public LogReplicationTask scheduleLogReplicationTask(Runnable task) {
-        ScheduledFuture<?> scheduledFuture = this.scheduledExecutorService.scheduleAtFixedRate(task, logReplicationDelay,logReplicationInterval, TimeUnit.MILLISECONDS);
+        ScheduledFuture<?> scheduledFuture = this.scheduledExecutorService
+                .scheduleAtFixedRate(task, logReplicationDelay,logReplicationInterval, TimeUnit.MILLISECONDS);
         return new LogReplicationTask(scheduledFuture);
     }
 
-    // 选举超时定时器
+    // 选举超时
     @Override
     public ElectionTimeout scheduleElectionTimeout(Runnable task) {
         /**

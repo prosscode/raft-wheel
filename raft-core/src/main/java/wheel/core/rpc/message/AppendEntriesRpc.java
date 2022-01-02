@@ -1,10 +1,9 @@
 package wheel.core.rpc.message;
 
-import wheel.core.rpc.NodeId;
+import wheel.core.node.NodeId;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @describe:
@@ -22,7 +21,7 @@ public class AppendEntriesRpc {
     // 前一条日志的term
     private int prevLogTerm = 0;
     // 复制的日志条目
-    private List<Map.Entry> entries = Collections.emptyList();
+    private List<Object> entries = Collections.emptyList();
     // leader的commitIndex
     private int leaderCommit;
 
@@ -58,11 +57,11 @@ public class AppendEntriesRpc {
         this.prevLogTerm = prevLogTerm;
     }
 
-    public List<Map.Entry> getEntries() {
+    public List<Object> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<Map.Entry> entries) {
+    public void setEntries(List<Object> entries) {
         this.entries = entries;
     }
 
