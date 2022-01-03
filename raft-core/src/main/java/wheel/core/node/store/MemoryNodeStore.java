@@ -36,7 +36,6 @@ public class MemoryNodeStore implements NodeStore {
     @Override
     public void setVotedFor(NodeId votedFor) {
         this.voteFor = votedFor;
-
     }
 
     @Override

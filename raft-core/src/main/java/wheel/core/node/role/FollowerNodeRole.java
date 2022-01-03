@@ -19,8 +19,8 @@ public class FollowerNodeRole extends AbstractNodeRole {
     // 选举超时
     private final ElectionTimeout electionTimeout;
 
-    public FollowerNodeRole(RoleName name,
-                            int term, NodeId votedFor,
+    public FollowerNodeRole(int term,
+                            NodeId votedFor,
                             NodeId leaderId,
                             ElectionTimeout electionTimeout) {
         super(RoleName.FOLLOWER, term);

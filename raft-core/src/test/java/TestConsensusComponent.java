@@ -18,12 +18,12 @@ public class TestConsensusComponent {
         eventBus.register(this);
     }
 
-
     // 订阅request vote rpc消息
     @Subscribe
     public void onRequestVoteRpc(RequestVoteRpc rpc){}
 
     // 订阅request vote result消息
+    @Subscribe
     public void onRequestVoteResult(RequestVoteResult result){}
 
 }

@@ -6,14 +6,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * @describe: 选举超时类
  * 对ScheduledFuture进行一个封装，公开了取消的方法，理论上来说，重复取消或取消已完成的任务不会有问题
- *
  * @created by shuang.peng
  * @date: 2020/08/29
  */
 public class ElectionTimeout {
 
     private final ScheduledFuture<?> scheduledFuture;
-
 
     public ElectionTimeout(ScheduledFuture<?> scheduledFuture) {
         this.scheduledFuture = scheduledFuture;
