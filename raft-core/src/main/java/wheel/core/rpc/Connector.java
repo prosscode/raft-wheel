@@ -16,13 +16,16 @@ import java.util.Collection;
 public interface Connector {
     // 初始化
     void initialize();
+
     // 发送request vote给节点 (request vote一般是群发)
     void sendRequestVote(RequestVoteRpc requestVoteRpc, Collection<NodeEndpoint> destinationEndpoints);
+
     // 回复request vote结果
-    void replyRequestVote(RequestVoteResult requestVoteResult,NodeEndpoint destinationEndpoint);
+    void replyRequestVote(RequestVoteResult requestVoteResult, NodeEndpoint destinationEndpoint);
 
     // 发送appendEntries消息给节点
     void sendAppendEntries(AppendEntriesRpc entriesRpc, NodeEndpoint destinationEndpoints);
+
     // 发送appendEntries结果
     void replyAppendEntries(AppendEntriesResult entriesResult, NodeEndpoint destinationEndpoint);
 

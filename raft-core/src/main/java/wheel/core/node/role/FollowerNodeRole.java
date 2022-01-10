@@ -39,8 +39,13 @@ public class FollowerNodeRole extends AbstractNodeRole {
 
     // 取消选举定时器
     @Override
-    public void cancelTimeoutTask() {
+    public void cancelTimeoutOrTask() {
         electionTimeout.cancel();
+    }
+
+    @Override
+    public NodeId getLeaderId(NodeId selfId) {
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package wheel.core.node.role;
 
+import wheel.core.node.NodeId;
 import wheel.core.schedule.LogReplicationTask;
 
 /**
@@ -21,10 +22,20 @@ public class LeaderNodeRole extends AbstractNodeRole {
         this.logReplicationTask = logReplicationTask;
     }
 
+    public LeaderNodeRole(int term, LogReplicationTask logReplicationTask) {
+        super(RoleName.LEADER, term);
+        this.logReplicationTask = logReplicationTask;
+    }
+
     // 取消日志复制定时任务
     @Override
-    public void cancelTimeoutTask() {
+    public void cancelTimeoutOrTask() {
         logReplicationTask.cancel();
+    }
+
+    @Override
+    public NodeId getLeaderId(NodeId selfId) {
+        return selfId;
     }
 
     @Override

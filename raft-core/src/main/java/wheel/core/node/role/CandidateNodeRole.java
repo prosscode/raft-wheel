@@ -1,5 +1,6 @@
 package wheel.core.node.role;
 
+import wheel.core.node.NodeId;
 import wheel.core.schedule.ElectionTimeout;
 
 /**
@@ -31,8 +32,13 @@ public class CandidateNodeRole extends AbstractNodeRole{
 
 
     @Override
-    public void cancelTimeoutTask() {
+    public void cancelTimeoutOrTask() {
         electionTimeout.cancel();
+    }
+
+    @Override
+    public NodeId getLeaderId(NodeId selfId) {
+        return null;
     }
 
     /**

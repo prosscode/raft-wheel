@@ -1,5 +1,7 @@
 package wheel.core.node;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +27,24 @@ public class NodeGroup {
             }
         }
         return endpoints;
+    }
+
+    int getCountOfMajor() {
+        return (int) memberMap.values().stream().filter(GroupMember::isMajor).count();
+    }
+
+    @Nullable
+    GroupMember getMember(NodeId id) {
+        return memberMap.get(id);
+    }
+
+    @Nonnull
+    GroupMember findMember(NodeId id) {
+        GroupMember member = getMember(id);
+        if (member == null) {
+            throw new IllegalArgumentException("no such node " + id);
+        }
+        return member;
     }
 
 }

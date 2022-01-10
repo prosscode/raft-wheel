@@ -10,7 +10,6 @@ import wheel.core.node.NodeId;
  * @date: 2020/09/12
  */
 public class RequestVoteRpc {
-
     // 选举term
     private int term;
     // 候选者节点ID，一般都是发送者自己

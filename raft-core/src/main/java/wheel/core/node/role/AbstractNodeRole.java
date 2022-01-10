@@ -1,5 +1,7 @@
 package wheel.core.node.role;
 
+import wheel.core.node.NodeId;
+
 /**
  * @describe: 角色和状态数据公共类
  *      抽取公共的字段作为父类数据，方便为每一个角色建模。
@@ -22,7 +24,7 @@ public abstract class AbstractNodeRole {
     }
 
     // 取消超时或者定时任务
-    public abstract void cancelTimeoutTask();
+    public abstract void cancelTimeoutOrTask();
 
     // 获取角色名
     public RoleName getName() {
@@ -33,5 +35,7 @@ public abstract class AbstractNodeRole {
     public int getTerm() {
         return term;
     }
+
+    public abstract NodeId getLeaderId(NodeId selfId);
 
 }
