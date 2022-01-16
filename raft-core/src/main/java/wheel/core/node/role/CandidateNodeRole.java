@@ -7,7 +7,7 @@ import wheel.core.schedule.ElectionTimeout;
  * @describe: candidate节点角色
  *      1.被投票，决定变成follower或者leader
  * @created by shuang.peng
- * @date: 2020/08/23
+ * @date: 2021/12/23
  */
 public class CandidateNodeRole extends AbstractNodeRole{
     // 得到的票数

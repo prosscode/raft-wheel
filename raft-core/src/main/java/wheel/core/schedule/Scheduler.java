@@ -9,7 +9,7 @@ package wheel.core.schedule;
  *      3。重置选举超时，在follower角色收到leader角色的心跳消息时进行
  *
  * @created by shuang.peng
- * @date: 2020/08/23
+ * @date: 2021/12/23
  */
 public interface Scheduler {
 

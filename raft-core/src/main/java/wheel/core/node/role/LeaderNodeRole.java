@@ -10,7 +10,7 @@ import wheel.core.schedule.LogReplicationTask;
  *
  *  leader角色被创建后，除非切换成其它角色，否则不会有修改
  * @created by shuang.peng
- * @date: 2020/08/23
+ * @date: 2021/12/23
  */
 public class LeaderNodeRole extends AbstractNodeRole {
 

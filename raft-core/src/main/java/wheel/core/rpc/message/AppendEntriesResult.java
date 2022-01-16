@@ -3,7 +3,7 @@ package wheel.core.rpc.message;
 /**
  * @describe:
  * @created by shuang.peng
- * @date: 2020/09/12
+ * @date: 2021/12/26
  */
 public class AppendEntriesResult {
     private final int term;

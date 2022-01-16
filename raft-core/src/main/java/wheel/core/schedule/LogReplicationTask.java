@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @describe:
  * @created by shuang.peng
- * @date: 2020/08/29
+ * @date: 2021/12/29
  */
 public class LogReplicationTask {
 

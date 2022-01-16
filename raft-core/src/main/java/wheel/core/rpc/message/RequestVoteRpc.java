@@ -7,7 +7,7 @@ import wheel.core.node.NodeId;
  *  1。request vote 投票请求
  *  2。append entries 日志复制请求
  * @created by shuang.peng
- * @date: 2020/09/12
+ * @date: 2021/12/26
  */
 public class RequestVoteRpc {
     // 选举term

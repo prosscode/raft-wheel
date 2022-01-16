@@ -8,7 +8,7 @@ import wheel.core.schedule.ElectionTimeout;
  *    1。需要去投票
  *    2。需要知道leader节点
  * @created by shuang.peng
- * @date: 2020/08/23
+ * @date: 2021/12/23
  */
 
 public class FollowerNodeRole extends AbstractNodeRole {

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @describe:
  * @created by shuang.peng
- * @date: 2020/09/12
+ * @date: 2021/12/26
  */
 public class AppendEntriesRpc {
 
