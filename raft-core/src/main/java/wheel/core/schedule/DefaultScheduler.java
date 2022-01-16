@@ -28,7 +28,10 @@ public class DefaultScheduler implements Scheduler {
     private final ScheduledExecutorService scheduledExecutorService;
 
     // 构造函数
-    public DefaultScheduler(int minElectionTimeout, int maxElectionTimeout, int logReplicationDelay, int logReplicationInterval) {
+    public DefaultScheduler(int minElectionTimeout,
+                            int maxElectionTimeout,
+                            int logReplicationDelay,
+                            int logReplicationInterval) {
         // 判断选举参数是否有效
         if(minElectionTimeout <= 0 || maxElectionTimeout <= 0 || minElectionTimeout > maxElectionTimeout){
             throw new IllegalArgumentException("election timeout should not be 0 or min > max");

@@ -19,7 +19,6 @@ import java.nio.charset.StandardCharsets;
  * 4字节，votedFor长度
  * 可变长，votedFor内容
  */
-
 @NotThreadSafe
 public class FileNodeStore implements NodeStore {
     private static final String FILE_NAME = "node.bin";

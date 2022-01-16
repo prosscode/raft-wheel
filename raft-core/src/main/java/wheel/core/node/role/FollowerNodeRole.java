@@ -10,7 +10,6 @@ import wheel.core.schedule.ElectionTimeout;
  * @created by shuang.peng
  * @date: 2021/12/23
  */
-
 public class FollowerNodeRole extends AbstractNodeRole {
     // 投过票的节点（有可能为空，不可能被投票）
     private final NodeId votedFor;

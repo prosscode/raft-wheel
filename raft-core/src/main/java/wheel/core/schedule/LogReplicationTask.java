@@ -12,6 +12,9 @@ public class LogReplicationTask {
 
     private final ScheduledFuture<?> scheduledFuture;
 
+    // 不设置日志复制定时器，测试用
+    public static final LogReplicationTask NONE = new LogReplicationTask(new NullScheduledFuture());
+
     public LogReplicationTask(ScheduledFuture<?> scheduledFuture) {
         this.scheduledFuture = scheduledFuture;
     }

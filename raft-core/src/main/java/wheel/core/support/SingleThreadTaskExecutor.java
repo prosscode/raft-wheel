@@ -1,5 +1,9 @@
 package wheel.core.support;
 
+import com.google.common.util.concurrent.FutureCallback;
+
+import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.concurrent.*;
 
 /**
@@ -30,6 +34,16 @@ public class SingleThreadTaskExecutor implements TaskExecutor {
     @Override
     public <V> Future<V> submit(Callable<V> task) {
         return executorService.submit(task);
+    }
+
+    @Override
+    public void submit(@Nonnull Runnable task, @Nonnull FutureCallback<Object> callback) {
+
+    }
+
+    @Override
+    public void submit(@Nonnull Runnable task, @Nonnull Collection<FutureCallback<Object>> callbacks) {
+
     }
 
     @Override

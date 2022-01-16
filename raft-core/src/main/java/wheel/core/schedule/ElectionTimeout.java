@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class ElectionTimeout {
 
     private final ScheduledFuture<?> scheduledFuture;
-    // 不设置选举超时，测试
+    // 不设置选举超时，测试用
     public static final ElectionTimeout NONE = new ElectionTimeout(new NullScheduledFuture());
 
     public ElectionTimeout(ScheduledFuture<?> scheduledFuture) {

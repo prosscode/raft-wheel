@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 /**
  * @Date 2022/1/9
  * @Created by shuang.peng
- * @Description NullScheduledFuture
+ * @Description NullScheduledFuture, 构造ElectionTimeout和LogReplicationTask的NONE实例
  */
 public class NullScheduledFuture implements ScheduledFuture<Object> {
     @Override

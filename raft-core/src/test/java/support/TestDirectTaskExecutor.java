@@ -1,7 +1,10 @@
 package support;
 
+import com.google.common.util.concurrent.FutureCallback;
 import wheel.core.support.TaskExecutor;
 
+import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -25,6 +28,16 @@ public class TestDirectTaskExecutor implements TaskExecutor {
         FutureTask<V> futureTask = new FutureTask<V>(task);
         futureTask.run();
         return futureTask;
+    }
+
+    @Override
+    public void submit(@Nonnull Runnable task, @Nonnull FutureCallback<Object> callback) {
+
+    }
+
+    @Override
+    public void submit(@Nonnull Runnable task, @Nonnull Collection<FutureCallback<Object>> callbacks) {
+
     }
 
     @Override

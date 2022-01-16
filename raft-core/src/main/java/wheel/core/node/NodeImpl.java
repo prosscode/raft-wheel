@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import wheel.core.node.role.*;
+import wheel.core.node.store.MemoryNodeStore;
 import wheel.core.node.store.NodeStore;
 import wheel.core.rpc.message.*;
 import wheel.core.schedule.ElectionTimeout;
@@ -34,6 +35,15 @@ public class NodeImpl implements Node{
         this.nodeContext = nodeContext;
     }
 
+    // 获取核心组件上下文
+    public NodeContext getNodeContext() {
+        return this.nodeContext;
+    }
+
+    public AbstractNodeRole getNodeRole(){
+        return this.nodeRole;
+    }
+
     @Override
     public void start() {
         // 如果已经启动，则跳过
@@ -45,12 +55,13 @@ public class NodeImpl implements Node{
         nodeContext.getEventBus().register(this);
         // 初始化Connector
         nodeContext.getConnector().initialize();
+        // store持久化到memory
+        nodeContext.setStore(new MemoryNodeStore(0,NodeId.of(null)));
 
         // 启动时默认时follower角色,获取持久化的node状态
         NodeStore store = nodeContext.getStore();
         changeToRole(new FollowerNodeRole(store.getTerm(),
                 store.getVotedFor(),
-//                NodeId.of(null),
                 null,
                 scheduleElectionTimeout()));
         started = true;
@@ -58,7 +69,7 @@ public class NodeImpl implements Node{
 
     @Override
     public void stop() throws InterruptedException {
-        // state check
+        // node state check
         if(!started){
             throw new IllegalStateException("node not started");
         }
@@ -99,7 +110,7 @@ public class NodeImpl implements Node{
         return nodeContext.getScheduler().scheduleElectionTimeout(this::electionTimeout);
     }
 
-    void electionTimeout() {
+    public void electionTimeout() {
         nodeContext.getTaskExecutor().submit(this::doProcessElectionTimeout);
     }
 
@@ -131,8 +142,8 @@ public class NodeImpl implements Node{
      * @param rpcMessage rpc过来的对象信息
      */
     @Subscribe
-    void onReceiveRequestVoteRpc(RequestVoteRpcMessage rpcMessage) {
-        nodeContext.getTaskExecutor().submit(()->{
+    public void onReceiveRequestVoteRpc(RequestVoteRpcMessage rpcMessage) {
+        nodeContext.getTaskExecutor().submit(() -> {
             nodeContext.getConnector().replyRequestVote(
                     doProcessRequestVoteRpc(rpcMessage),
                     // 发送消息的节点

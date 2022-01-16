@@ -4,10 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -17,11 +14,28 @@ import java.util.stream.Collectors;
  */
 public class NodeGroup {
     private final NodeId selfId;
-    private HashMap<NodeId,GroupMember> memberMap;
+    private Map<NodeId,GroupMember> memberMap;
 
     public NodeGroup(NodeId selfId) {
         this.selfId = selfId;
     }
+
+    NodeGroup(Collection<NodeEndpoint> endpoints, NodeId selfId) {
+        this.memberMap = buildMemberMap(endpoints);
+        this.selfId = selfId;
+    }
+
+    private Map<NodeId, GroupMember> buildMemberMap(Collection<NodeEndpoint> endpoints) {
+        Map<NodeId, GroupMember> map = new HashMap<>();
+        for (NodeEndpoint endpoint : endpoints) {
+            map.put(endpoint.getId(), new GroupMember(endpoint));
+        }
+        if (map.isEmpty()) {
+            throw new IllegalArgumentException("endpoints is empty");
+        }
+        return map;
+    }
+
 
     Set<NodeEndpoint> listEndpointExceptSelf(){
         HashSet<NodeEndpoint> endpoints = new HashSet<>();
