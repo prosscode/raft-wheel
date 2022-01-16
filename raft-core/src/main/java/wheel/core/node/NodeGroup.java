@@ -1,10 +1,14 @@
 package wheel.core.node;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Date 2022/1/2
@@ -45,6 +49,14 @@ public class NodeGroup {
             throw new IllegalArgumentException("no such node " + id);
         }
         return member;
+    }
+
+    /**
+     * List replication target
+     * @return
+     */
+    Collection<GroupMember> listReplicationTarget(){
+        return memberMap.values().stream().filter(node->!node.equals(selfId)).collect(Collectors.toList());
     }
 
 }
