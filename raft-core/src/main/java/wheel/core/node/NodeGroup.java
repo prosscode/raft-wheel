@@ -70,7 +70,9 @@ public class NodeGroup {
      * @return
      */
     Collection<GroupMember> listReplicationTarget(){
-        return memberMap.values().stream().filter(node->!node.equals(selfId)).collect(Collectors.toList());
+        return memberMap.values().stream()
+                .filter(node->!node.idEquals(selfId))
+                .collect(Collectors.toList());
     }
 
 }

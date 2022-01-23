@@ -53,4 +53,8 @@ public class GroupMember {
     public void setRemoving(boolean removing) {
         this.removing = removing;
     }
+
+    boolean idEquals(NodeId id) {
+        return endpoint.getId().equals(id);
+    }
 }

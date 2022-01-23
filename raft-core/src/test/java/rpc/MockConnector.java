@@ -2,7 +2,6 @@ package rpc;
 
 import wheel.core.node.NodeEndpoint;
 import wheel.core.node.NodeId;
-import wheel.core.node.store.MemoryNodeStore;
 import wheel.core.rpc.Connector;
 import wheel.core.rpc.message.AppendEntriesResult;
 import wheel.core.rpc.message.AppendEntriesRpc;
@@ -12,6 +11,7 @@ import wheel.core.rpc.message.RequestVoteRpc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @Date 2022/1/16
@@ -47,7 +47,7 @@ public class MockConnector implements Connector {
         return messages.size();
     }
 
-    public Object getMessages(){
+    public List<Message> getMessages(){
         return new ArrayList<>(messages);
     }
 
@@ -99,7 +99,7 @@ public class MockConnector implements Connector {
     }
 
 
-    private static class Message{
+    public static class Message{
         private Object rpc;
         private NodeId destinationNodeId;
         private Object result;

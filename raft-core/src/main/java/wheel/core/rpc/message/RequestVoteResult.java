@@ -1,7 +1,7 @@
 package wheel.core.rpc.message;
 
 /**
- * @describe: RequestVote响应类
+ * @describe: RequestVoteResult响应类
  * @created by shuang.peng
  * @date: 2021/12/26
  */

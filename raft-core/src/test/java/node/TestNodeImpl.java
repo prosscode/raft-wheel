@@ -4,20 +4,24 @@ import org.junit.Assert;
 import org.junit.Test;
 import rpc.MockConnector;
 import wheel.core.node.*;
+import wheel.core.node.role.AbstractNodeRole;
 import wheel.core.node.role.CandidateNodeRole;
 import wheel.core.node.role.FollowerNodeRole;
-import wheel.core.rpc.message.RequestVoteResult;
-import wheel.core.rpc.message.RequestVoteRpc;
-import wheel.core.rpc.message.RequestVoteRpcMessage;
+import wheel.core.node.role.LeaderNodeRole;
+import wheel.core.rpc.Connector;
+import wheel.core.rpc.message.*;
 import wheel.core.schedule.NullScheduler;
 import wheel.core.support.DirectTaskExecutor;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Date 2022/1/16
  * @Created by shuang.peng
- * @Description TestNodeImpl Node构造测试类
+ * @Description TestNodeImpl构造测试类
  */
 public class TestNodeImpl {
 
@@ -96,4 +100,108 @@ public class TestNodeImpl {
         Assert.assertEquals(NodeId.of("C"), ((FollowerNodeRole) node.getNodeRole()).getVotedFor());
     }
 
+    // 收到request vote响应
+    // 要求：节点A变成candidate角色后收到投票的request vote响应，然后变成leader角色
+    @Test
+    public void testOnReceiveRequestVoteResultLeader(){
+        // node start
+        NodeImpl node = newNodeBuilder(
+                NodeId.of("A"),
+                new NodeEndpoint("A", "localhost", 2333),
+                new NodeEndpoint("B", "localhost", 2334),
+                new NodeEndpoint("C", "localhost", 2335)
+        ).build();
+        node.start();
+        // 选举超时，自己成为candidate role
+        node.electionTimeout();
+        // 模拟返回结果
+        node.onReceiveRequestVoteResult(new RequestVoteResult(1,true));
+        LeaderNodeRole nodeRole = (LeaderNodeRole) node.getNodeRole();
+        Assert.assertEquals(1,nodeRole.getTerm());
+    }
+
+    // 成为leader节点后的发送心跳消息
+    // 要求：节点A成为leader节点后，向B和C发送心跳消息
+    @Test
+    public void testReplicateLog(){
+        // node start
+        NodeImpl node = newNodeBuilder(
+                NodeId.of("A"),
+                new NodeEndpoint("A", "localhost", 2333),
+                new NodeEndpoint("B", "localhost", 2334),
+                new NodeEndpoint("C", "localhost", 2335)
+        ).build();
+        node.start();
+        // 成为candidate role，发送request vote消息，收到投票
+        node.electionTimeout();
+        node.onReceiveRequestVoteResult(new RequestVoteResult(1,true));
+        // 成为leader，开始发送append entries
+        node.replicateLog();
+        MockConnector mockConnector = (MockConnector) node.getNodeContext().getConnector();
+        // request算1条消息
+        Assert.assertEquals(3, mockConnector.getMessageCount());
+        // 检查目标节点
+        List<MockConnector.Message> messages = mockConnector.getMessages();
+        Set<NodeId> nodeIds = messages.subList(1, 3).stream().map(MockConnector.Message::getDestinationNodeId)
+                .collect(Collectors.toSet());
+        Assert.assertEquals(2, nodeIds.size());
+        Assert.assertTrue(nodeIds.contains(NodeId.of("B")));
+        Assert.assertTrue(nodeIds.contains(NodeId.of("C")));
+        AppendEntriesRpc rpc = (AppendEntriesRpc) mockConnector.getLastMessage().getRpc();
+        Assert.assertEquals(1, rpc.getTerm());
+    }
+
+    // 收到来自leader的心跳消息
+    // 要求：节点A启动后收到来自leader节点B的心跳消息，设置自己的term和leaderId
+    @Test
+    public void testOnReceiveAppendEntriesRpcFollower(){
+        // node start
+        NodeImpl node = newNodeBuilder(
+                NodeId.of("A"),
+                new NodeEndpoint("A", "localhost", 2333),
+                new NodeEndpoint("B", "localhost", 2334),
+                new NodeEndpoint("C", "localhost", 2335)
+        ).build();
+        node.start();
+        AppendEntriesRpc entriesRpc = new AppendEntriesRpc();
+        entriesRpc.setTerm(1);
+        entriesRpc.setLeaderId(NodeId.of("B"));
+        // 收到心跳消息
+        node.onReceiveAppendEntriesRpc(new AppendEntriesRpcMessage(entriesRpc, NodeId.of("B")));
+        MockConnector mockConnector = (MockConnector) node.getNodeContext().getConnector();
+        AppendEntriesResult result = (AppendEntriesResult) mockConnector.getResult();
+        // 断言回复心跳消息中term
+        Assert.assertEquals(1, result.getTerm());
+        Assert.assertTrue(result.isSuccess());
+        // 自己应该是follower role, leaderId应该是Node.of("B")
+        FollowerNodeRole nodeRole = (FollowerNodeRole) node.getNodeRole();
+        Assert.assertEquals(1, nodeRole.getTerm());
+        Assert.assertEquals(NodeId.of("B"), nodeRole.getLeaderId());
+    }
+
+    // leader收到其它节点的回复
+    // 要求：节点A成为Leader节点，发送心跳消息后，接受到其它节点的回复
+    @Test
+    public void testOnReceiveAppendEntriesResultLeader(){
+        // node start
+        NodeImpl node = newNodeBuilder(
+                NodeId.of("A"),
+                new NodeEndpoint("A", "localhost", 2333),
+                new NodeEndpoint("B", "localhost", 2334),
+                new NodeEndpoint("C", "localhost", 2335)
+        ).build();
+        node.start();
+        node.electionTimeout();
+        node.onReceiveRequestVoteResult(new RequestVoteResult(1,true));
+        node.replicateLog();
+        node.onReceiveAppendEntriesResult(
+                new AppendEntriesResultMessage(new AppendEntriesResult(1,true)
+                        ,NodeId.of("B")
+                ,new AppendEntriesRpc())
+        );
+        MockConnector connector =(MockConnector) node.getNodeContext().getConnector();
+        for (MockConnector.Message message : connector.getMessages()) {
+            System.out.println("message:"+message);
+        }
+    }
 }

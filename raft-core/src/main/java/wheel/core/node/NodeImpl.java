@@ -10,6 +10,7 @@ import wheel.core.rpc.message.*;
 import wheel.core.schedule.ElectionTimeout;
 import wheel.core.schedule.LogReplicationTask;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import static wheel.core.node.role.RoleName.FOLLOWER;
@@ -205,7 +206,7 @@ public class NodeImpl implements Node{
      * @param result
      */
     @Subscribe
-    void onReceiveRequestVoteResult(RequestVoteResult result){
+    public void onReceiveRequestVoteResult(RequestVoteResult result){
         nodeContext.getTaskExecutor().submit(()->{
             doProcessRequestVoteResult(result);
         });
@@ -221,27 +222,28 @@ public class NodeImpl implements Node{
         // 如果自己不是candidate角色，则忽略
         if(nodeRole.getName()!=RoleName.CANDIDATE){
             logger.debug("receive request vote result and current role is not candidate,ignore.");
+            return;
         }
         // 如果对方的term比自己小或者对象没有给自己投票，则忽略
         if(result.getTerm() < nodeRole.getTerm() || !result.isVoteGranted()){
             return;
         }
         // 当前票数
-        int currentvVoteCount = ((CandidateNodeRole) nodeRole).getVotesCount();
+        int currentVoteCount = ((CandidateNodeRole) nodeRole).getVotesCount();
         // 节点数
         int countOfMajor = nodeContext.getGroup().getCountOfMajor();
-        logger.debug("votes count {}, node count {}",currentvVoteCount,countOfMajor);
+        logger.debug("votes count {}, node count {}",currentVoteCount,countOfMajor);
         // 取消选举超时
         nodeRole.cancelTimeoutOrTask();
         // 判断票数
-        if (currentvVoteCount > countOfMajor / 2) {
+        if (currentVoteCount > countOfMajor / 2) {
             // 成为Leader角色
             logger.info("become leader, term {}", nodeRole.getTerm());
             changeToRole(new LeaderNodeRole(nodeRole.getTerm(), scheduleLogReplicationTask()));
         } else {
             // 修改收到的投票数，并重置创建选举超时
             changeToRole(new CandidateNodeRole(nodeRole.getTerm(),
-                    currentvVoteCount,
+                    currentVoteCount,
                     scheduleElectionTimeout()));
         }
     }
@@ -252,14 +254,15 @@ public class NodeImpl implements Node{
     }
 
     // 日志复制入口方法
-    void replicateLog() {
+    public void replicateLog() {
         nodeContext.getTaskExecutor().submit(this::doReplicateLog);
     }
 
     private void doReplicateLog() {
         logger.debug("replicate log");
-        // 给日志复制对象节点发送appendentries消息
-        for (GroupMember groupMember : nodeContext.getGroup().listReplicationTarget()) {
+        // 给日志复制对象节点发送append entries消息
+        Collection<GroupMember> members = nodeContext.getGroup().listReplicationTarget();
+        for (GroupMember groupMember : members) {
             doReplicateLogRpc(groupMember);
         }
     }
@@ -282,7 +285,7 @@ public class NodeImpl implements Node{
      * @param rpcMessage
      */
     @Subscribe
-    private void onReceiveAppendEntriesRpc(AppendEntriesRpcMessage rpcMessage){
+    public void onReceiveAppendEntriesRpc(AppendEntriesRpcMessage rpcMessage){
         nodeContext.getTaskExecutor().submit(()->{
             nodeContext.getConnector().replyAppendEntries(
                     doProcessAppendEntriesRpc(rpcMessage),
@@ -343,7 +346,7 @@ public class NodeImpl implements Node{
      * @param resultMessage
      */
     @Subscribe
-    void onReceiveAppendEntriesResult(AppendEntriesResultMessage resultMessage){
+    public void onReceiveAppendEntriesResult(AppendEntriesResultMessage resultMessage){
         nodeContext.getTaskExecutor().submit(()->doProcessAppendEntriesResult(resultMessage));
 
     }

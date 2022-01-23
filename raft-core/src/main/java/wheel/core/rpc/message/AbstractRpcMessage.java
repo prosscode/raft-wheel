@@ -11,12 +11,17 @@ import wheel.core.rpc.Channel;
 public abstract class AbstractRpcMessage<T> {
     private final T rpc;
     private final NodeId sourceNodeId;
-    private final Channel channel;
+    private Channel channel;
 
     AbstractRpcMessage(T rpc, NodeId sourceNodeId, Channel channel) {
         this.rpc = rpc;
         this.sourceNodeId = sourceNodeId;
         this.channel = channel;
+    }
+
+    AbstractRpcMessage(T rpc, NodeId sourceNodeId) {
+        this.rpc = rpc;
+        this.sourceNodeId = sourceNodeId;
     }
 
     public T get() {
