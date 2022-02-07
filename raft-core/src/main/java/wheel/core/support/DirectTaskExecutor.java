@@ -11,7 +11,7 @@ import java.util.concurrent.FutureTask;
 
 /**
  * @Date 2022/1/16
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description DirectTaskExecutor
  */
 public class DirectTaskExecutor extends AbstractTaskExecutor {
@@ -38,7 +38,7 @@ public class DirectTaskExecutor extends AbstractTaskExecutor {
     @Override
     public <V> Future<V> submit(Callable<V> task) {
         Preconditions.checkNotNull(task);
-        FutureTask<V> futureTask = new FutureTask<V>(task);
+        FutureTask<V> futureTask = new FutureTask<>(task);
         futureTask.run();
         return futureTask;
     }
@@ -59,6 +59,6 @@ public class DirectTaskExecutor extends AbstractTaskExecutor {
     }
 
     @Override
-    public void shutdown() throws InterruptedException {}
+    public void shutdown() {}
 
 }

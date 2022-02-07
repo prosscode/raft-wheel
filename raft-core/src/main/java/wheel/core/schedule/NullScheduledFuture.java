@@ -4,7 +4,7 @@ import java.util.concurrent.*;
 
 /**
  * @Date 2022/1/9
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NullScheduledFuture, 构造ElectionTimeout和LogReplicationTask的NONE实例
  */
 public class NullScheduledFuture implements ScheduledFuture<Object> {
@@ -34,12 +34,12 @@ public class NullScheduledFuture implements ScheduledFuture<Object> {
     }
 
     @Override
-    public Object get() throws InterruptedException, ExecutionException {
+    public Object get(){
         return null;
     }
 
     @Override
-    public Object get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+    public Object get(long timeout, TimeUnit unit) {
         return null;
     }
 }

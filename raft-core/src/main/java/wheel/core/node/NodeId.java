@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @describe:
- * @created by shuang.peng
- * @date: 2021/12/26
+ * @Description:
+ * @Author shuang.peng
+ * @Date 2021/12/26
  */
 public class NodeId implements Serializable {
 

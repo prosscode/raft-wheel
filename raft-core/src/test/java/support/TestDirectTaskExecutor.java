@@ -11,7 +11,7 @@ import java.util.concurrent.FutureTask;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description 对比SingleThreadTaskExecutor构造 直接执行的版本
  */
 public class TestDirectTaskExecutor implements TaskExecutor {
@@ -25,7 +25,7 @@ public class TestDirectTaskExecutor implements TaskExecutor {
 
     @Override
     public <V> Future<V> submit(Callable<V> task) {
-        FutureTask<V> futureTask = new FutureTask<V>(task);
+        FutureTask<V> futureTask = new FutureTask<>(task);
         futureTask.run();
         return futureTask;
     }
@@ -41,7 +41,7 @@ public class TestDirectTaskExecutor implements TaskExecutor {
     }
 
     @Override
-    public void shutdown() throws InterruptedException {
+    public void shutdown() {
 
     }
 }

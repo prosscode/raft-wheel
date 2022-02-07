@@ -2,7 +2,7 @@ package wheel.core.log.entry;
 
 /**
  * @Date 2022/1/23
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description 日志条目
  */
 public interface Entry {

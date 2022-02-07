@@ -17,7 +17,7 @@ import static wheel.core.node.role.RoleName.FOLLOWER;
 
 /**
  * @Date 2022/1/3
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NodeImpl 节点实现类
  *
  * 1.处理request vote消息（onReceiveRequestVoteRpc），并回复（onReceiveRequestVoteResult）
@@ -203,7 +203,7 @@ public class NodeImpl implements Node{
 
     /**
      * 节点收到request vote响应后返回结果处理
-     * @param result
+     * @param result RequestVoteResult
      */
     @Subscribe
     public void onReceiveRequestVoteResult(RequestVoteResult result){
@@ -282,7 +282,7 @@ public class NodeImpl implements Node{
 
     /**
      * 收到来自Leader节点的心跳信息
-     * @param rpcMessage
+     * @param rpcMessage AppendEntriesRpcMessage
      */
     @Subscribe
     public void onReceiveAppendEntriesRpc(AppendEntriesRpcMessage rpcMessage){
@@ -343,7 +343,7 @@ public class NodeImpl implements Node{
 
     /**
      *  leader节点收到其它节点的响应
-     * @param resultMessage
+     * @param resultMessage AppendEntriesResultMessage
      */
     @Subscribe
     public void onReceiveAppendEntriesResult(AppendEntriesResultMessage resultMessage){

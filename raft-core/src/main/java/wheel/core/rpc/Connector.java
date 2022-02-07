@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description rpc调用接口，方便测试和切换不同的实现
  */
 public interface Connector {

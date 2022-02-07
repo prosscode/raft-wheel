@@ -8,7 +8,7 @@ import java.util.Collections;
 
 /**
  * @Date 2022/1/16
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description AbstractTaskExecutor
  */
 public abstract class AbstractTaskExecutor implements TaskExecutor {

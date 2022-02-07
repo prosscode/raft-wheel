@@ -4,9 +4,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @describe:
- * @created by shuang.peng
- * @date: 2021/12/29
+ * @Description:
+ * @Author shuang.peng
+ * @Date 2021/12/29
  */
 public class LogReplicationTask {
 

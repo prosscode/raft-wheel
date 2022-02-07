@@ -2,7 +2,7 @@ package wheel.core.log.entry;
 
 /**
  * @Date 2022/1/23
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description AbstractEntry
  */
 public abstract class AbstractEntry implements Entry{

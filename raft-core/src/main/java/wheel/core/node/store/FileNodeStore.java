@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description FileNodeStore
  * 存储结构组成：
  * 4字节，current term

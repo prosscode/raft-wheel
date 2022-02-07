@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Date 2022/1/9
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NullScheduler 用于测试的定时器组件
  */
 public class NullScheduler implements Scheduler {
@@ -26,7 +26,7 @@ public class NullScheduler implements Scheduler {
     }
 
     @Override
-    public void stop() throws InterruptedException {
+    public void stop() {
 
     }
 }

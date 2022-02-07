@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NodeEndpoint
  */
 public class NodeEndpoint {

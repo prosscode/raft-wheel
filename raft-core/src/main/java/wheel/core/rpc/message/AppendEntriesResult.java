@@ -1,9 +1,9 @@
 package wheel.core.rpc.message;
 
 /**
- * @describe:
- * @created by shuang.peng
- * @date: 2021/12/26
+ * @Description:
+ * @Author shuang.peng
+ * @Date 2021/12/26
  */
 public class AppendEntriesResult {
     private final int term;

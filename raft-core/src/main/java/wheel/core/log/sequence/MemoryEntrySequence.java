@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @Date 2022/1/30
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description MemoryEntrySequence
  * 基于内存的日志条目序列，使用ArrayList<Entry>作为操作对象，需要随机访问日志序列。
  * （链表LinkedList的随机访问性能访问比较低）

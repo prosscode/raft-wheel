@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NodeGroup 集群成员组
  */
 public class NodeGroup {
@@ -67,7 +67,7 @@ public class NodeGroup {
 
     /**
      * List replication target
-     * @return
+     * @return Collection<GroupMember>
      */
     Collection<GroupMember> listReplicationTarget(){
         return memberMap.values().stream()

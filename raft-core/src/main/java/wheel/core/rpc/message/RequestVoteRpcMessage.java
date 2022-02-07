@@ -5,7 +5,7 @@ import wheel.core.rpc.Channel;
 
 /**
  * @Date 2022/1/3
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description RequestVoteRpcMessage
  */
 public class RequestVoteRpcMessage extends AbstractRpcMessage<RequestVoteRpc> {

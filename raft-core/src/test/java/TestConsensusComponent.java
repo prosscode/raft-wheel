@@ -7,7 +7,7 @@ import java.net.Socket;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description pub-sub方案解决耦合问题（发布-订阅）
  * 可以使用Guava的Eventbus来弱化依赖关系
  */

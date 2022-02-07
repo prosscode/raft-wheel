@@ -4,7 +4,7 @@ import wheel.core.node.NodeId;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description MemoryNodeStore 测试用
  */
 public class MemoryNodeStore implements NodeStore {

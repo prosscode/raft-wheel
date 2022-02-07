@@ -4,7 +4,7 @@ import wheel.core.node.NodeId;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description NodeStore;节点投票后的状态需要持久化,保证一个节点在一个选举范围内只投票一次
  */
 public interface NodeStore {

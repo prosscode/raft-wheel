@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @Date 2022/1/30
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description AbstractEntrySequence抽象大部分和存储无关的方法
  * logIndexOffset：日志索引偏移量
  * nextLogIndex：下一条日志的索引
@@ -19,7 +19,6 @@ public abstract class AbstractEntrySequence implements EntrySequence {
 
     /**
      * 初始情况下，日志索引偏移量 = 下一条日志的索引 = 1
-     * @param logIndexOffset
      */
     public AbstractEntrySequence(int logIndexOffset) {
         this.logIndexOffset = logIndexOffset;

@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description 异步单线程的实现
  */
 public class SingleThreadTaskExecutor implements TaskExecutor {

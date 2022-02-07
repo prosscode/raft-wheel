@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @Date 2022/1/16
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description AppendEntriesResultMessage
  */
 public class AppendEntriesResultMessage {

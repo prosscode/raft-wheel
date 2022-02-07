@@ -3,11 +3,11 @@ package wheel.core.rpc.message;
 import wheel.core.node.NodeId;
 
 /**
- * @describe: raft核心算法中主要有两种消息
+ * @Description: raft核心算法中主要有两种消息
  *  1。request vote 投票请求
  *  2。append entries 日志复制请求
- * @created by shuang.peng
- * @date: 2021/12/26
+ * @Author shuang.peng
+ * @Date 2021/12/26
  */
 public class RequestVoteRpc {
     // 选举term

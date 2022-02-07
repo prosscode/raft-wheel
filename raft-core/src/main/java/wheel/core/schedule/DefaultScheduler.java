@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
 /**
- * @describe: 默认定时器实现
- * @created by shuang.peng
- * @date: 2021/12/23
+ * describe: 默认定时器实现
+ * @Author shuang.peng
+ * @Date 2021/12/23
  */
 public class DefaultScheduler implements Scheduler {
 
@@ -73,7 +73,7 @@ public class DefaultScheduler implements Scheduler {
     }
 
     @Override
-    public void stop() throws InterruptedException {
+    public void stop() {
 
     }
 }

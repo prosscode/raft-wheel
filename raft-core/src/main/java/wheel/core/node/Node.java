@@ -2,7 +2,7 @@ package wheel.core.node;
 
 /**
  * @Date 2022/1/3
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description Node 暴露给上层节点服务接口
  */
 public interface Node {

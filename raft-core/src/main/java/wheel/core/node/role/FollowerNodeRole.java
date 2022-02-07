@@ -4,11 +4,11 @@ import wheel.core.node.NodeId;
 import wheel.core.schedule.ElectionTimeout;
 
 /**
- * @describe: follower节点角色
+ * @Description: follower节点角色
  *    1。需要去投票
  *    2。需要知道leader节点
- * @created by shuang.peng
- * @date: 2021/12/23
+ * @Author shuang.peng
+ * @Date 2021/12/23
  */
 public class FollowerNodeRole extends AbstractNodeRole {
     // 投过票的节点（有可能为空，不可能被投票）

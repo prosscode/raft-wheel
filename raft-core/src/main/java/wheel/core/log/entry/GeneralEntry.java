@@ -2,7 +2,7 @@ package wheel.core.log.entry;
 
 /**
  * @Date 2022/1/23
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description GeneralEntry 普通日志条目的实现
  */
 public class GeneralEntry extends AbstractEntry{

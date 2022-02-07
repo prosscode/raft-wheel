@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 /**
  * @Date 2022/1/3
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description ByteArraySeekableFile
  */
 public class ByteArraySeekableFile implements SeekableFile{

@@ -4,8 +4,9 @@ import java.io.*;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description RandomAccessFileAdapter
+ * SeekableFile中的方法基本上在RandomAccessFile中有对应的方法
  */
 public class RandomAccessFileAdapter implements SeekableFile{
     private final File file;
@@ -81,7 +82,7 @@ public class RandomAccessFileAdapter implements SeekableFile{
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush() {
     }
 
     @Override

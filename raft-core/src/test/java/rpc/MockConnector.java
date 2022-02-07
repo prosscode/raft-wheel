@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @Date 2022/1/16
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description MockConnector测试，设计一个存放消息的链表，暴露读取发送后的消息
  */
 public class MockConnector implements Connector {

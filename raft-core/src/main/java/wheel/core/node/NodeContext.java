@@ -9,7 +9,7 @@ import wheel.core.support.TaskExecutor;
 
 /**
  * @Date 2022/1/2
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description 间接层类，隔绝核心组件和和各个组件之间的直接调用访问
  */
 public class NodeContext {

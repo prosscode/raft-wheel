@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @Date 2022/1/23
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description 日志接口
  */
 public interface Log {

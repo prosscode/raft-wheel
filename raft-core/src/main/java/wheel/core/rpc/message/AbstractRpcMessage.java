@@ -5,7 +5,7 @@ import wheel.core.rpc.Channel;
 
 /**
  * @Date 2022/1/9
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description AbstractRpcMessage
  */
 public abstract class AbstractRpcMessage<T> {

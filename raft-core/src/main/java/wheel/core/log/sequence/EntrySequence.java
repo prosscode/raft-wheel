@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @Date 2022/1/23
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description EntrySequence 日志序列接口
  * 日志序列接口是为了当实现Raft算法中的日志快照时，可能需要对Log实现进行修改
  * 提取了序列化部分提前做好了日志组件的拆分，方便更快的加入日志快照功能
@@ -25,8 +25,7 @@ public interface EntrySequence {
 
     /**
      * subList主要用于构造AppendEntries消息时获取指定区间的日志条目
-     * @param fromIndex
-     * @return
+     * @return List<Entry>
      */
     // 获取序列的子视图，到最后一条日志
     List<Entry> subList(int fromIndex) throws EmptySequenceException;
@@ -52,10 +51,10 @@ public interface EntrySequence {
     int getCommitIndex();
 
     /**
+     * 移除某个索引之后的日志条目
      * removeAfter主要用于追加来自Leader节点的日志时出现日志冲突的情况，移除现有日志
-     * @param index
+     * @param index index
      */
-    // 移除某个索引之后的日志条目
     void removeAfter(int index);
 
     // 关闭日志序列

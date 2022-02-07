@@ -1,9 +1,9 @@
 package wheel.core.rpc.message;
 
 /**
- * @describe: RequestVoteResult响应类
- * @created by shuang.peng
- * @date: 2021/12/26
+ * @Description: RequestVoteResult响应类
+ * @Author shuang.peng
+ * @Date 2021/12/26
  */
 public class RequestVoteResult {
 

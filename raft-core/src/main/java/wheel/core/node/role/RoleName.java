@@ -1,13 +1,13 @@
 package wheel.core.node.role;
 
 /**
- * @Created by shuang.peng
+ * @Author shuang.peng
  * @Description
- * @date: 2021/12/23
+ * @Date 2021/12/23
  */
 public enum RoleName {
     // 节点的三种角色
     FOLLOWER,
     CANDIDATE,
-    LEADER;
+    LEADER
 }

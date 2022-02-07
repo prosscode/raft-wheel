@@ -4,10 +4,10 @@ import wheel.core.node.NodeId;
 import wheel.core.schedule.ElectionTimeout;
 
 /**
- * @describe: candidate节点角色
+ * @Description: candidate节点角色
  *      1.被投票，决定变成follower或者leader
- * @created by shuang.peng
- * @date: 2021/12/23
+ * @Author shuang.peng
+ * @Date 2021/12/23
  */
 public class CandidateNodeRole extends AbstractNodeRole{
     // 得到的票数
@@ -43,8 +43,8 @@ public class CandidateNodeRole extends AbstractNodeRole{
 
     /**
      * 增加票数意味着需要重置选举超时（cancel）
-     * @param electionTimeout
-     * @return
+     * @param electionTimeout 选举超时参数
+     * @return CandidateNodeRole
      */
     public CandidateNodeRole increaseVotesCount(ElectionTimeout electionTimeout){
         this.electionTimeout.cancel();
