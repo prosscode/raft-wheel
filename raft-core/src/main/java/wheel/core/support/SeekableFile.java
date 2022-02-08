@@ -6,7 +6,7 @@ import java.io.InputStream;
 /**
  * @Date 2022/1/2
  * @Author shuang.peng
- * @Description SeekableFile 包装对文件的一系列操作
+ * @Description SeekableFile包装对文件的一系列操作
  */
 public interface SeekableFile {
 

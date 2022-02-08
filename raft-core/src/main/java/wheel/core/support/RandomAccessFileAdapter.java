@@ -18,9 +18,13 @@ public class RandomAccessFileAdapter implements SeekableFile{
 
     public RandomAccessFileAdapter(File file,String mode) throws FileNotFoundException {
         this.file = file;
-        RandomAccessFile randomAccessFile = new RandomAccessFile(file, mode);
+        randomAccessFile = new RandomAccessFile(file, mode);
     }
 
+    @Override
+    public long position() throws IOException {
+        return randomAccessFile.getFilePointer();
+    }
 
     @Override
     public void seek(long position) throws IOException {
@@ -74,11 +78,6 @@ public class RandomAccessFileAdapter implements SeekableFile{
             input.skip(start);
         }
         return input;
-    }
-
-    @Override
-    public long position() throws IOException {
-        return randomAccessFile.getFilePointer();
     }
 
     @Override
