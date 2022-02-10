@@ -16,7 +16,6 @@ import java.util.List;
 public abstract class AbstractEntrySequence implements EntrySequence {
     int logIndexOffset;
     int nextLogIndex;
-
     /**
      * 初始情况下，日志索引偏移量 = 下一条日志的索引 = 1
      */

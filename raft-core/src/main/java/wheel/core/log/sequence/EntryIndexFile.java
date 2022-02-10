@@ -4,8 +4,8 @@ import wheel.core.support.RandomAccessFileAdapter;
 import wheel.core.support.SeekableFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -69,8 +69,132 @@ public class EntryIndexFile implements Iterable<EntryIndexItem>{
         entryIndexCount = maxEntryIndex - minEntryIndex + 1;
     }
 
+    // 追加日志条目元信息,顺序追加
+    public void appendEntryIndex(int index,long offset,int kind,int term) throws IOException {
+        if(seekableFile.size() == 0){
+            // 如果文件为空，则写入minEntryIndex
+            seekableFile.writeInt(index);
+            minEntryIndex = index;
+        } else {
+            // 检查索引
+            if (index != maxEntryIndex + 1) {
+                throw new IllegalArgumentException("index must be" + (maxEntryIndex + 1) + ",but was " + index);
+            }
+            // 跳过minEntryIndex
+            seekableFile.seek(OFFSET_MAX_ENTRY_INDEX);
+        }
+
+        // 写入maxEntryIndex
+        seekableFile.writeInt(index);
+        maxEntryIndex = index;
+        updateEntryIndexCount();
+        // 移动到文件最后
+        seekableFile.seek(getOffsetOfEntryIndexItem(index));
+        seekableFile.writeLong(offset);
+        seekableFile.writeInt(kind);
+        seekableFile.writeInt(term);
+        entryIndexMap.put(index,new EntryIndexItem(index,offset,kind,term));
+    }
+
+    // 获取指定索引的日志的偏移
+    private long getOffsetOfEntryIndexItem(int index){
+        return (index - minEntryIndex) * LENGTH_ENTRY_INDEX_ITEM + Integer.BYTES * 2;
+    }
+
+    // 移除某个索引之后的数据
+    public void removeAfter(int newMaxEntryIndex) throws IOException {
+        // 判断是否为空
+        if(isEmpty() || newMaxEntryIndex >= maxEntryIndex){
+            return;
+        }
+        // 判断新的maxEntryIndex是否比minEntryIndex小
+        if(newMaxEntryIndex < minEntryIndex){
+            // 如果是则全部移除
+            clear();
+            return;
+        }
+        // 修改maxEntryIndex
+        seekableFile.seek(OFFSET_MAX_ENTRY_INDEX);
+        seekableFile.writeInt(newMaxEntryIndex);
+        // 裁剪文件
+        seekableFile.truncate(getOffsetOfEntryIndexItem(newMaxEntryIndex + 1));
+        // 移除缓存中的元信息
+        for (int i = newMaxEntryIndex + 1; i <= maxEntryIndex; i++) {
+            entryIndexMap.remove(i);
+        }
+        maxEntryIndex = newMaxEntryIndex;
+        entryIndexCount = newMaxEntryIndex - minEntryIndex + 1;
+    }
+
+    public int getMinEntryIndex() {
+        checkEmpty();
+        return minEntryIndex;
+    }
+
+    public int getMaxEntryIndex() {
+        checkEmpty();
+        return maxEntryIndex;
+    }
+
+    public int getEntryIndexCount() {
+        return entryIndexCount;
+    }
+
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new IllegalStateException("no entry index");
+        }
+    }
+
+    public boolean isEmpty() {
+        return entryIndexCount == 0;
+    }
+
+    // 清除全部
+    public void clear() throws IOException {
+        seekableFile.truncate(0L);
+        entryIndexCount = 0;
+        entryIndexMap.clear();
+    }
+
     @Override
     public Iterator<EntryIndexItem> iterator() {
-        return null;
+        // 索引是否为空
+        if(isEmpty()){
+            return Collections.emptyIterator();
+        }
+        return new EntryIndexIterator(entryIndexCount,minEntryIndex);
     }
+
+
+    private class EntryIndexIterator implements Iterator<EntryIndexItem> {
+        // 条目总数
+        private final int entryIndexCount;
+        // 当前索引
+        private int currentEntryIndex;
+
+        public EntryIndexIterator(int entryIndexCount, int currentEntryIndex) {
+            this.entryIndexCount = entryIndexCount;
+            this.currentEntryIndex = currentEntryIndex;
+        }
+        // 是否存在下一条
+        public boolean hasNext(){
+            checkModification();
+            return currentEntryIndex <= maxEntryIndex;
+        }
+
+        // 检查是否修改
+        private void checkModification() {
+            if(this.entryIndexCount!=EntryIndexFile.this.entryIndexCount){
+                throw new IllegalStateException("entry index count changed");
+            }
+        }
+
+        // 获取下一条
+        public EntryIndexItem next(){
+            checkModification();
+            return entryIndexMap.get(currentEntryIndex++);
+        }
+    }
+
 }
