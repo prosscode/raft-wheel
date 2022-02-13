@@ -3,6 +3,7 @@ package wheel.core.log.sequence;
 import wheel.core.support.RandomAccessFileAdapter;
 import wheel.core.support.SeekableFile;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -136,6 +137,10 @@ public class EntryIndexFile implements Iterable<EntryIndexItem>{
         return maxEntryIndex;
     }
 
+    public long getOffset(int entryIndex) {
+        return get(entryIndex).getOffset();
+    }
+
     public int getEntryIndexCount() {
         return entryIndexCount;
     }
@@ -148,6 +153,15 @@ public class EntryIndexFile implements Iterable<EntryIndexItem>{
 
     public boolean isEmpty() {
         return entryIndexCount == 0;
+    }
+
+    @Nonnull
+    public EntryIndexItem get(int entryIndex) {
+        checkEmpty();
+        if (entryIndex < minEntryIndex || entryIndex > maxEntryIndex) {
+            throw new IllegalArgumentException("index < min or index > max");
+        }
+        return entryIndexMap.get(entryIndex);
     }
 
     // 清除全部

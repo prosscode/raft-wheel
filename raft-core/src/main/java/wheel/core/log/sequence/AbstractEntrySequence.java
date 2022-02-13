@@ -81,7 +81,7 @@ public abstract class AbstractEntrySequence implements EntrySequence {
     }
 
     // 获取最后一条日志的索引
-    private int doGetLastLogIndex() {
+    public int doGetLastLogIndex() {
         return nextLogIndex - 1;
     }
 

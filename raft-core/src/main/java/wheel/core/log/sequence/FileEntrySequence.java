@@ -3,6 +3,7 @@ package wheel.core.log.sequence;
 import wheel.core.log.LogDir;
 import wheel.core.log.LogException;
 import wheel.core.log.entry.Entry;
+import wheel.core.log.entry.EntryMeta;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,11 +17,12 @@ import java.util.List;
  * @Author shuang.peng
  * @Description EntriesFile、EntryIndexFile和pendingEntries构成FileEntrySequence,用于获取日志条目
  */
-public class FileEntrySequence extends AbstractEntrySequence{
+public class FileEntrySequence extends AbstractEntrySequence {
     private final EntryFactory entryFactory = new EntryFactory();
-    private final EntriesFile entriesFile;
-    private final EntryIndexFile entryIndexFile;
+    // 日志缓冲List
     private final LinkedList<Entry> pendingEntries = new LinkedList<>();
+    private EntriesFile entriesFile;
+    private EntryIndexFile entryIndexFile;
     // raft算法中定义初始commitIndex为0，和日志是否持久化无关
     private int commitIndex = 0;
 
@@ -98,28 +100,128 @@ public class FileEntrySequence extends AbstractEntrySequence{
 
     // 按照索引获取文件中的日志条目
     private Entry getEntryInFile(int index){
-        return null;
+        long offset = entryIndexFile.getOffset(index);
+        try {
+            return entriesFile.loadEntry(offset, entryFactory);
+        } catch (IOException e) {
+            throw new LogException("failed to load entry " + index, e);
+        }
     }
 
     // 获取指定位置的日志条目
     @Override
     protected Entry doGetEntry(int index) {
-        return null;
+        if(!pendingEntries.isEmpty()){
+            int firstPendingEntryIndex = pendingEntries.getFirst().getIndex();
+            if(index >= firstPendingEntryIndex){
+                return pendingEntries.get(index - firstPendingEntryIndex);
+            }
+        }
+        assert !entryIndexFile.isEmpty();
+        return getEntryInFile(index);
     }
 
+    // 获取日志元信息
+    public EntryMeta getEntryMeta(int index){
+        if(!isEntryPresent(index)){
+            return null;
+        }
+        if(!pendingEntries.isEmpty()){
+            int firstPendingEntryIndex = pendingEntries.getFirst().getIndex();
+            if(index >= firstPendingEntryIndex){
+                return pendingEntries.get(index - firstPendingEntryIndex).getMeta();
+            }
+        }
+        return entryIndexFile.get(index).toEntryMeta();
+    }
 
+    // 获取最后一条日志
+    public Entry getLastEntry(){
+        if(isEmpty()){
+            return null;
+        }
+        if(!pendingEntries.isEmpty()){
+            return pendingEntries.getLast();
+        }
+        assert !entryIndexFile.isEmpty();
+        return getEntryInFile(entryIndexFile.getMaxEntryIndex());
+    }
+
+    // 追加日志条目
     @Override
     protected void doAppend(Entry entry) {
-
+        pendingEntries.add(entry);
     }
 
+    // 移除指定索引之后的日志条目
     @Override
     protected void doMoveAfter(int index) {
-
+        // 只需要移除缓冲中的日志
+        if(!pendingEntries.isEmpty() && index >= pendingEntries.getFirst().getIndex() - 1){
+            // 移除指定数量的日志条目
+            // 循环方向是从小到大，但是移除是从后往前
+            // 最终移除指定数量的日志条目
+            for (int i = index + 1; i <= doGetFirstLogIndex(); i++) {
+                pendingEntries.removeLast();
+            }
+            nextLogIndex = index + 1;
+            return;
+        }
+        try {
+            if (index >= doGetFirstLogIndex()) {
+                // 索引比日志缓冲中的第一条日志小
+                pendingEntries.clear();
+                entriesFile.truncate(entryIndexFile.getOffset(index + 1));
+                entryIndexFile.removeAfter(index);
+                nextLogIndex = index + 1;
+                commitIndex = index;
+            } else {
+                // 如果索引比第一条日志的索引都小，则清除所有数据
+                pendingEntries.clear();
+                entriesFile.clear();
+                entryIndexFile.clear();
+                nextLogIndex = logIndexOffset;
+                commitIndex = logIndexOffset -1;
+            }
+        } catch (IOException e) {
+            throw new LogException(e);
+        }
     }
 
+    // 把日志缓冲中的日志写入日志文件和日志条目索引中
     @Override
     public void commit(int index) {
+        // 检查commitIndex
+        if (index < commitIndex) {
+            throw new IllegalArgumentException("commit index <" + commitIndex);
+        }
+        if (index == commitIndex) {
+            return;
+        }
+        // 如果commitIndex在文件内，则只需要更新commitIndex
+        if(!entryIndexFile.isEmpty() && index <= entryIndexFile.getMaxEntryIndex()){
+            commitIndex = index;
+            return;
+        }
+        // 检查commitIndex是否在日志缓冲的区间内
+        if (pendingEntries.isEmpty()
+                || pendingEntries.getFirst().getIndex() > index
+                || pendingEntries.getLast().getIndex() < index) {
+            throw new IllegalArgumentException("no entry to commit or commit index exceed");
+        }
+
+        long offset;
+        Entry entry = null;
+        try {
+            for (int i = pendingEntries.getFirst().getIndex(); i <= index; i++) {
+                entry = pendingEntries.removeFirst();
+                offset = entriesFile.appendEntry(entry);
+                entryIndexFile.appendEntryIndex(i, offset, entry.getKind(), entry.getTerm());
+                commitIndex = i;
+            }
+        } catch (IOException e) {
+            throw new LogException("failed to commit entry " + entry, e);
+        }
 
     }
 
