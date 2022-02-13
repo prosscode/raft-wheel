@@ -1,17 +1,17 @@
 package wheel.core.rpc.message;
 
+import wheel.core.log.entry.Entry;
 import wheel.core.node.NodeId;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * @Description:
- * @Author shuang.peng
  * @Date 2021/12/26
+ * @Author shuang.peng
+ * @Description: AppendEntriesRpc
  */
 public class AppendEntriesRpc {
-
     // 选举term
     private int term;
     // leader节点id
@@ -21,7 +21,7 @@ public class AppendEntriesRpc {
     // 前一条日志的term
     private int prevLogTerm = 0;
     // 复制的日志条目
-    private List<Object> entries = Collections.emptyList();
+    private List<Entry> entries = Collections.emptyList();
     // leader的commitIndex
     private int leaderCommit;
 
@@ -57,11 +57,11 @@ public class AppendEntriesRpc {
         this.prevLogTerm = prevLogTerm;
     }
 
-    public List<Object> getEntries() {
+    public List<Entry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<Object> entries) {
+    public void setEntries(List<Entry> entries) {
         this.entries = entries;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Date 2022/1/23
  * @Author shuang.peng
- * @Description EntrySequence 日志序列接口
+ * @Description EntrySequence 日志条目序列接口
  * 日志序列接口是为了当实现Raft算法中的日志快照时，可能需要对Log实现进行修改
  * 提取了序列化部分提前做好了日志组件的拆分，方便更快的加入日志快照功能
  */

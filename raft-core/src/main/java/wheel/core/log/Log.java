@@ -4,6 +4,7 @@ import wheel.core.log.entry.Entry;
 import wheel.core.log.entry.EntryMeta;
 import wheel.core.log.entry.GeneralEntry;
 import wheel.core.log.entry.NoOpEntry;
+import wheel.core.log.sequence.EmptySequenceException;
 import wheel.core.node.NodeId;
 import wheel.core.rpc.message.AppendEntriesRpc;
 
@@ -21,7 +22,7 @@ public interface Log {
     EntryMeta getLastEntryMeta();
 
     // 创建AppendEntries消息（Leader向Follower发送日志复制消息）
-    AppendEntriesRpc createAppendEntriesRpc(int term, NodeId selfId, int nextIndex, int maxEntries);
+    AppendEntriesRpc createAppendEntriesRpc(int term, NodeId selfId, int nextIndex, int maxEntries) throws EmptySequenceException;
 
     // 获取下一条日志的索引（leader服务需要重置follower服务的日志复制进度，所有的follower服务的初始nextLogIndex都是当前服务的下一条日志索引）
     int getNextIndex();
@@ -38,7 +39,7 @@ public interface Log {
     GeneralEntry appendEntry(int term,byte[] command);
 
     // 追加来自Leader的日志条目（收到来自Leader服务器的日志复制请求时）
-    boolean appendEntriesFromLeader(int prevLogIndex, int prevLogTerm, List<Entry> entries);
+    boolean appendEntriesFromLeader(int prevLogIndex, int prevLogTerm, List<Entry> entries) throws EmptySequenceException;
 
     // 推进commitIndex（收到来自Leader服务器的日志复制请求时）
     void advanceCommitIndex(int newCommitIndex,int currentTerm);
